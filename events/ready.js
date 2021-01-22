@@ -1,3 +1,3 @@
 module.exports = async (client) => {
-  console.log(`Ready! Logged in as ${client.user.username}`);
-};
+  console.log(`Ready! Logged in as ${client.user.username}`)
+}

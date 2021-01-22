@@ -1,5 +1,4 @@
-const fetch = require("node-fetch");
-const config = require("./config");
+const fetch = require("node-fetch")
 
 module.exports = {
   /**
@@ -7,16 +6,19 @@ module.exports = {
    * @param {string} folder_id
    */
   async getLists(folder_id) {
-    return await fetch(`https://api.clickup.com/api/v2/folder/${folder_id}/list`, {
-      method: "GET",
-      headers: {
-        Authorization: config.CLICKUP_TOKEN,
-        "Content-Type": "application/json",
-      },
-    }).then(async (res) => {
-      const json = await res.json();
-      return json.lists;
-    });
+    return await fetch(
+      `https://api.clickup.com/api/v2/folder/${folder_id}/list`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: process.env.CLICKUP_TOKEN,
+          "Content-Type": "application/json",
+        },
+      }
+    ).then(async (res) => {
+      const json = await res.json()
+      return json.lists
+    })
   },
 
   /**
@@ -27,10 +29,10 @@ module.exports = {
     return await fetch(`https://api.clickup.com/api/v2/list/${list_id}`, {
       method: "GET",
       headers: {
-        Authorization: config.CLICKUP_TOKEN,
+        Authorization: process.env.CLICKUP_TOKEN,
         "Content-Type": "application/json",
       },
-    }).then((res) => res.json());
+    }).then((res) => res.json())
   },
 
   /**
@@ -38,18 +40,18 @@ module.exports = {
    */
   async getFolders() {
     return await fetch(
-      `https://api.clickup.com/api/v2/space/${config.SPACE_ID}/folder?archived=false`,
+      `https://api.clickup.com/api/v2/space/${process.env.SPACE_ID}/folder?archived=false`,
       {
         method: "GET",
         headers: {
-          Authorization: config.CLICKUP_TOKEN,
+          Authorization: process.env.CLICKUP_TOKEN,
           "Content-Type": "application/json",
         },
       }
     ).then(async (res) => {
-      const json = await res.json();
-      return json.folders;
-    });
+      const json = await res.json()
+      return json.folders
+    })
   },
 
   /**
@@ -60,10 +62,10 @@ module.exports = {
     return await fetch(`https://api.clickup.com/api/v2/folder/${folder_id}`, {
       method: "GET",
       headers: {
-        Authorization: config.CLICKUP_TOKEN,
+        Authorization: process.env.CLICKUP_TOKEN,
         "Content-Type": "application/json",
       },
-    }).then((res) => res.json());
+    }).then((res) => res.json())
   },
   /**
    * Fetchs all tasks from a list
@@ -87,14 +89,14 @@ module.exports = {
       {
         method: "GET",
         headers: {
-          Authorization: config.CLICKUP_TOKEN,
+          Authorization: process.env.CLICKUP_TOKEN,
           "Content-Type": "application/json",
         },
       }
     ).then(async (res) => {
-      const json = await res.json();
-      return json.tasks;
-    });
+      const json = await res.json()
+      return json.tasks
+    })
   },
 
   /**
@@ -105,10 +107,10 @@ module.exports = {
     return await fetch(`https://api.clickup.com/api/v2/task/${task_id}`, {
       method: "GET",
       headers: {
-        Authorization: config.CLICKUP_TOKEN,
+        Authorization: process.env.CLICKUP_TOKEN,
         "Content-Type": "application/json",
       },
-    }).then((res) => res.json());
+    }).then((res) => res.json())
   },
 
   async createTask(list_id, name, content) {
@@ -116,25 +118,25 @@ module.exports = {
       name,
       text_content: content,
       notify_all: true,
-    });
+    })
 
     return await fetch(`https://api.clickup.com/api/v2/list/${list_id}/task`, {
       method: "POST",
       headers: {
-        Authorization: config.CLICKUP_TOKEN,
+        Authorization: process.env.CLICKUP_TOKEN,
         "Content-Type": "application/json",
       },
       body,
-    }).then((res) => res.json());
+    }).then((res) => res.json())
   },
 
   async deleteTask(task_id) {
     return await fetch(`https://api.clickup.com/api/v2/task/${task_id}`, {
       method: "DELETE",
       headers: {
-        Authorization: config.CLICKUP_TOKEN,
+        Authorization: process.env.CLICKUP_TOKEN,
         "Content-Type": "application/json",
       },
-    }).then((res) => res.json());
+    }).then((res) => res.json())
   },
-};
+}

@@ -7,4 +7,4 @@ Tired of switching between Discord & ClickUp? Well, now you can create, view, an
 1. cu!ping - Returns the bot ping.
 2. cu!folders - Returns a list of folders.
 3. cu!lists <folder id> - Returns all the lists in a folder.
-4. cu!newtask <title> | <description> | <list> - Creates a new task in the specified list, ARGUMENTS MUST BE SEPARATED USING A PIPE!
+4. cu!newtask <title> | <description> | <folder> | <list> - Creates a new task in the specified list, ARGUMENTS MUST BE SEPARATED USING A PIPE!
