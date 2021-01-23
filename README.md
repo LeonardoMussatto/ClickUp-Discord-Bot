@@ -1,3 +1,5 @@
+![stage](https://img.shields.io/badge/stage-development-9171BD?style=flat-square)
+
 # ClickUp-Discord-Bot
 Integrate Discord and ClickUp
 
