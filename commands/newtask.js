@@ -1,6 +1,5 @@
-const fetch = require("node-fetch")
-const {getFolders} = require("../ClickUpAPIUtils/ClickUpAPI_Get")
-const {createTask} = require("../ClickUpAPIUtils/ClickUpAPI_Actions")
+const {getFolders} = require("../utils/ClickUpAPI_Get")
+const {createTask} = require("../utils/ClickUpAPI_Actions")
 
 // ENHANCE add expected usage and useful answer when parameters are missing
 

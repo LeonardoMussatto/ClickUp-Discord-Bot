@@ -16,11 +16,11 @@ exports.run = async (client, message, args) => {
     await client.loadCommand(args[0])
     stopwatch.stop()
     return msg.edit(
-      `<a:tickgreen:730207093797290025> Command Loaded in **${Math.round(stopwatch.duration)}ms**`
+      `:white_check_mark: Command Loaded in **${Math.round(stopwatch.duration)}ms**`
     )
   } catch (error) {
     return msg.edit(
-      `<a:tickred:730207097114984519> well fuck, looks like shits broken again... blame ittim!\n\`\`\`\n${error}\n\`\`\``
+      `:x: well fuck, looks like shits broken again... blame ittim!\n\`\`\`\n${error}\n\`\`\``
     )
   }
 }

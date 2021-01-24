@@ -1,5 +1,4 @@
-const fetch = require("node-fetch")
-const {getFolders} = require("../ClickUpAPIUtils/ClickUpAPI_Get")
+const {getFolders} = require("../utils/ClickUpAPI_Get")
 
 exports.run = async (client, message, args) => {
   const folders = await getFolders(process.env.SPACE_ID)

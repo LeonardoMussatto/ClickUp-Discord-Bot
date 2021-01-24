@@ -5,7 +5,7 @@ exports.run = async (client, message, args) => {
     return message.channel.send(
       "Only developers are allowed to ask me to reload commands"
     )
-  if (!args || args.length < 0)
+  if (!args || args.length < 1)
     return message.channel.send("You must provide me a command to reload")
   const cmd = client.commands.find(
     (x) => x.help.name.toLowerCase() === args[0].toLowerCase()
@@ -22,10 +22,10 @@ exports.run = async (client, message, args) => {
     await client.loadCommand(cmd.help.name)
     stopwatch.stop()
     return msg.edit(
-      `<a:tickgreen:730207093797290025> Command Reloaded in **${Math.round(stopwatch.duration)}ms**`)
+      `:white_check_mark: Command Reloaded in **${Math.round(stopwatch.duration)}ms**`)
   } catch (error) {
     return msg.edit(
-      `<a:tickred:730207097114984519> well, looks like it's broken again... blame ittim!\n\`\`\`\n${error}\n\`\`\``)
+      `:x: well, looks like it's broken again... blame ittim!\n\`\`\`\n${error}\n\`\`\``)
   }
 }
 

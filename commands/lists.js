@@ -1,5 +1,4 @@
-const fetch = require("node-fetch")
-const {getFolder, getLists, getFolders} = require("../ClickUpAPIUtils/ClickUpAPI_Get")
+const {getFolder, getLists, getFolders} = require("../utils/ClickUpAPI_Get")
 
 exports.run = async (client, message, args) => {
   if (args.length === 1) {

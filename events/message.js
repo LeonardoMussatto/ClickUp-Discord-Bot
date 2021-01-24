@@ -1,14 +1,14 @@
 module.exports = async (client, message) => {
   if (message.channel.type !== "text") return
   if (message.author.bot) return
-  if (!message.content.toLowerCase().startsWith(process.env.PREFIX.toLowerCase()))return
+  if (!message.content.toLowerCase().startsWith(client.settings.prefix.toLowerCase()))return
   if (message.guild && !message.member)
     await message.guild.members.fetch(message.author)
   if (!message.member.roles.cache.has(process.env.STAFF_ROLE))
     return message.channel.send("Sorry, your role doesn't give you permission to run this command" )
 
   const args = message.content
-    .slice(process.env.PREFIX.length)
+    .slice(client.settings.prefix.length)
     .trim()
     .split(/ +/g)
   const cmdName = args.shift().toLowerCase()

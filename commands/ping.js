@@ -3,7 +3,7 @@ exports.run = async (client, message, args) => {
   const ping =
     (msg.editedTimestamp || msg.createdAt) -
     (message.editedTimestamp || message.createdAt)
-  return msg.edit(`Fine, its ${ping}ms`)
+  msg.edit(`Fine, its ${ping}ms.`)
 }
 
 exports.help = {

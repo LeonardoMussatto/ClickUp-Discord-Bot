@@ -1,10 +1,37 @@
 const Discord = require("discord.js")
 const fs = require("fs")
 const { join } = require("path")
-const client = new Discord.Client()
+const firebase = require("firebase/app")
+require("firebase/database")
 
-client.logger = require("./logger")
+const client = new Discord.Client()
 client.commands = new Discord.Collection()
+client.logger = require("./logger")
+
+const firebaseConfig = {
+  apiKey: process.env.API_KEY,
+  authDomain: "clickup-discord-bot.firebaseapp.com",
+  projectId: "clickup-discord-bot",
+  databaseURL: "https://clickup-discord-bot-default-rtdb.firebaseio.com",
+  storageBucket: "clickup-discord-bot.appspot.com",
+  messagingSenderId: process.env.SENDER_ID,
+  appId: "1:428084021978:web:5aa1a3c7e9a10b574df3e3",
+  measurementId: "G-BQYET7E1SN"
+}
+firebase.initializeApp(firebaseConfig)
+
+let database = firebase.database()
+client.database = database
+
+let ref = client.database.ref("default/botSettings")
+ref.once("value")
+  .then((snapshot) => {
+    var data = snapshot.val()
+    client.settings = data
+  }, (error) => {
+    client.logger.error(`Error reading settings: ${error}`)
+  }
+)
 
 // Developers' commands
 client.loadCommand = (commandName) => {
