@@ -4,7 +4,7 @@ const ClickUpAPIUtils = require("../ClickUpAPIUtils")
 exports.run = async (client, message, args) => {
   if (args.length !== 1)
     return message.channel.send(
-      "You don't give me information, i cant file it :("
+      "I need information, in order to file it"
     )
 
   const task = await ClickUpAPIUtils.getTask(args[0])

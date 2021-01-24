@@ -1,12 +1,12 @@
 const { Stopwatch } = require("@klasa/stopwatch")
 
 exports.run = async (client, message, args) => {
-  if (message.author.id !== "213247101314924545")
-    return message.channel.send("you arent my boss! leave me alone!")
-  if (args.length === 0)
+  if (message.author.id !== process.env.DEV_ID)
     return message.channel.send(
-      "You don't give me information, i cant file it :("
+      "Only developers are allowed to ask me to unload commands"
     )
+  if (!args || args.length < 0)
+    return message.channel.send("You must provide me a command to reload")
   const cmd = client.commands.find(
     (x) => x.help.name.toLowerCase() === args[0].toLowerCase()
   )
@@ -20,9 +20,7 @@ exports.run = async (client, message, args) => {
     await client.unloadCommand(cmd.help.name)
     stopwatch.stop()
     return msg.edit(
-      `<a:tickgreen:730207093797290025> Command Unloaded in **${Math.round(
-        stopwatch.duration
-      )}ms**`
+      `<a:tickgreen:730207093797290025> Command Unloaded in **${Math.round(stopwatch.duration)}ms**`
     )
   } catch (error) {
     return msg.edit(

@@ -1,12 +1,12 @@
 const { Stopwatch } = require("@klasa/stopwatch")
 
 exports.run = async (client, message, args) => {
-  if (message.author.id !== "213247101314924545")
-    return message.channel.send("you arent my boss! leave me alone!")
-  if (args.length === 0)
+  if (message.author.id !== process.env.DEV_ID)
     return message.channel.send(
-      "You don't give me information, i cant file it >:("
+      "Only developers are allowed to ask me to load commands"
     )
+  if (!args || args.length < 0)
+    return message.channel.send("You must provide me a command to reload")
 
   const msg = await message.channel.send(
     `Loading command **${args[0]}** <a:loading:730285373422305360>`
@@ -16,9 +16,7 @@ exports.run = async (client, message, args) => {
     await client.loadCommand(args[0])
     stopwatch.stop()
     return msg.edit(
-      `<a:tickgreen:730207093797290025> Command Loaded in **${Math.round(
-        stopwatch.duration
-      )}ms**`
+      `<a:tickgreen:730207093797290025> Command Loaded in **${Math.round(stopwatch.duration)}ms**`
     )
   } catch (error) {
     return msg.edit(

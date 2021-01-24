@@ -8,7 +8,7 @@ exports.run = async (client, message, args) => {
     .map((x) => x.trim())
   if (newArgs.length !== 2)
     return message.channel.send(
-      "You don't give me information, i cant file it :("
+      "I need information, in order to file it"
     )
 
   const task = await fetch(

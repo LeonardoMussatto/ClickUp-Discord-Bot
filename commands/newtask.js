@@ -11,7 +11,7 @@ exports.run = async (client, message, args) => {
     .map((x) => x.trim())
   if (newArgs.length !== 4)
     return message.channel.send(
-      "Give me information, or I can't file it"
+      "I need information, in order to file it"
     )
 
   const folders = await ClickUpAPIUtils.getFolders()
