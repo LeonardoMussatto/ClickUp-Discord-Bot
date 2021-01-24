@@ -1,10 +1,36 @@
+![stage](https://img.shields.io/badge/stage-development-9171BD?style=flat-square)
+
 # ClickUp-Discord-Bot
-Create &amp; Update ClickUp Tasks from Discord!
+Integrate Discord and ClickUp
 
-Tired of switching between Discord & ClickUp? Well, now you can create, view, and update ClickUp tasks from within Discord! Just update config.example.js to your needs, and rename it to config.js and you'll be good to go!
+## Features To Be Implemented
+### Comments
+  - Sync comments in ClickUp and a Discord channel of your choice (bi-lateral)
+    
+### Tasks
+  - View task
+  - Edit task
+  - Create Task
+  - Delete Task
+  - Assign Task
+  
+### Checklists
+  - Create Checklist
+  - Edit Checlist
+  - Create Checklist Item
+  - Edit Checklist Item
 
-## Commands
-1. cu!ping - Returns the bot ping.
-2. cu!folders - Returns a list of folders.
-3. cu!lists <folder id> - Returns all the lists in a folder.
-4. cu!newtask <title> | <description> | <folder> | <list> - Creates a new task in the specified list, ARGUMENTS MUST BE SEPARATED USING A PIPE!
+### Lists
+  - View Tasks in List
+  - Create List
+  - Edit List
+  
+### Users
+  - Invite User To Workspace
+  - Remove User From Workspace
+  - Get Users
+  
+### Settings
+  - OAuth
+  - Comments Channel
+  - Permissions
