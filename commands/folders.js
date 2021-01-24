@@ -1,8 +1,8 @@
 const fetch = require("node-fetch")
-const ClickUpAPIUtils = require("../ClickUpAPIUtils")
+const {getFolders} = require("../ClickUpAPIUtils/ClickUpAPI_Get")
 
 exports.run = async (client, message, args) => {
-  const folders = await ClickUpAPIUtils.getFolders()
+  const folders = await getFolders(process.env.SPACE_ID)
   if (folders.err)
     return message.channel.send(`Error fetching folders: ${folders.err}`)
   return message.channel.send(

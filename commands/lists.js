@@ -1,13 +1,13 @@
 const fetch = require("node-fetch")
-const ClickUpAPIUtils = require("../ClickUpAPIUtils")
+const {getFolder, getLists, getFolders} = require("../ClickUpAPIUtils/ClickUpAPI_Get")
 
 exports.run = async (client, message, args) => {
   if (args.length === 1) {
-    const folder = await ClickUpAPIUtils.getFolder(args[0])
+    const folder = await getFolder(args[0])
     if (folder.err)
       return message.channel.send(`Error fetching folder: ${folder.err}`)
 
-    const lists = await ClickUpAPIUtils.getLists(folder.id)
+    const lists = await getLists(folder.id)
     if (lists.err)
       return message.channel.send(`Error fetching lists: ${lists.err}`)
 
@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
         .join("\n")}\n\`\`\``
     )
   } else {
-    const folders = await ClickUpAPIUtils.getFolders()
+    const folders = await getFolders(process.env.SPACE_ID)
     if (folders.err)
       return message.channel.send(`Error fetching folders: ${folder.err}`)
 

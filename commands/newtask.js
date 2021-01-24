@@ -1,5 +1,6 @@
 const fetch = require("node-fetch")
-const ClickUpAPIUtils = require("../ClickUpAPIUtils")
+const {getFolders} = require("../ClickUpAPIUtils/ClickUpAPI_Get")
+const {createTask} = require("../ClickUpAPIUtils/ClickUpAPI_Actions")
 
 // ENHANCE add expected usage and useful answer when parameters are missing
 
@@ -14,7 +15,7 @@ exports.run = async (client, message, args) => {
       "I need information, in order to file it"
     )
 
-  const folders = await ClickUpAPIUtils.getFolders()
+  const folders = await getFolders(process.env.SPACE_ID)
   if (!folders || folders.err)
     return message.channel.send("Error fetching folders!")
 
@@ -33,7 +34,7 @@ exports.run = async (client, message, args) => {
   else if (list.err)
     return message.channel.send(`error getting list: ${list.err}`)
 
-  const res = await ClickUpAPIUtils.createTask(list.id, newArgs[0], newArgs[1])
+  const res = await createTask(list.id, newArgs[0], newArgs[1])
   if (res.err) return message.channel.send(`fdgffrg! ${res.err}`)
 
   return message.channel.send(

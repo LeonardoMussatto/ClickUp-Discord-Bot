@@ -1,13 +1,13 @@
 const fetch = require("node-fetch")
-const ClickUpAPIUtils = require("../ClickUpAPIUtils")
+const {getFolders, getList, getTasks} = require("../ClickUpAPIUtils/ClickUpAPI_Get")
 
 exports.run = async (client, message, args) => {
   if (args.length === 1) {
-    const list = await ClickUpAPIUtils.getList(args[0])
+    const list = await getList(args[0])
     if (list.err)
       return message.channel.send(`Error fetching list: ${list.err}`)
 
-    const tasks = await ClickUpAPIUtils.getTasks(list.id)
+    const tasks = await getTasks(list.id)
     if (tasks.err)
       return message.channel.send(`Error fetching tasks: ${tasks.err}`)
 
@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
         .join("\n")}\n\`\`\``
     )
   } else {
-    const folders = await ClickUpAPIUtils.getFolders().then((folders) =>
+    const folders = await getFolders(process.env.SPACE_ID).then((folders) =>
       folders.filter((f) => f.lists.length !== 0)
     )
     if (folders.err)
@@ -29,7 +29,7 @@ exports.run = async (client, message, args) => {
       for await (const list of folder.lists) {
         msg += "----------\n"
         msg += `• ${list.name} | ${list.id}\n`
-        const tasks = await ClickUpAPIUtils.getTasks(list.id)
+        const tasks = await getTasks(list.id)
         if (tasks.length === 0) msg += "No tasks!\n"
         for await (const task of tasks) {
           if (!task.name) continue
