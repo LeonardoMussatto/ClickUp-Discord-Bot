@@ -1,6 +1,8 @@
 const fetch = require("node-fetch")
 const ClickUpAPIUtils = require("../ClickUpAPIUtils")
 
+// ENHANCE add expected usage and useful answer when parameters are missing
+
 exports.run = async (client, message, args) => {
   const newArgs = message.content
     .slice(process.env.PREFIX.length + this.help.name.length)
@@ -9,7 +11,7 @@ exports.run = async (client, message, args) => {
     .map((x) => x.trim())
   if (newArgs.length !== 4)
     return message.channel.send(
-      "You don't give me information, i cant file it :("
+      "Give me information, or I can't file it"
     )
 
   const folders = await ClickUpAPIUtils.getFolders()
@@ -21,7 +23,7 @@ exports.run = async (client, message, args) => {
   )
   if (!folder)
     return message.channel.send(
-      "cant find folder or a folder that contains the specified list"
+      "I can't find folder or a folder that contains the specified list"
     )
   const list = folder.lists.find(
     (x) => x.name.toLowerCase() === newArgs[3] || x.id === newArgs[3]

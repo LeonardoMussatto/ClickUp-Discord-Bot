@@ -12,7 +12,7 @@ client.loadCommand = (commandName) => {
     console.log(`[Command Initialization] Command Loaded: ${commandName}`)
     return true
   } catch (e) {
-    throw e
+    throw "Loading Failed"
   }
 }
 
@@ -60,10 +60,10 @@ fs.readdir(join(__dirname, "commands"), (err, files) => {
     return console.error(
       `[Command Initialization] Error while loading loading commands: ${err}`
     )
-  files.forEach((f) => {
-    if (!f.endsWith(".js")) return
+  files.forEach((file) => {
+    if (!file.endsWith(".js")) return
     try {
-      client.loadCommand(f.split(".js")[0])
+      client.loadCommand(file.split(".js")[0])
     } catch (error) {
       console.error(error.message)
     }

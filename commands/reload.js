@@ -1,12 +1,10 @@
 const { Stopwatch } = require("@klasa/stopwatch")
 
 exports.run = async (client, message, args) => {
-  if (message.author.id !== "213247101314924545")
-    return message.channel.send("you arent my boss! leave me alone!")
-  if (args.length === 0)
-    return message.channel.send(
-      "You don't give me information, i cant file it :("
-    )
+  if (message.author.id !== process.env.DEV_ID)
+    return message.channel.send("Only developers are allowed to ask me to reload commands")
+  if (!args || args.length === 0)
+    return message.channel.send("You must provide me a command to reload")
   const cmd = client.commands.find(
     (x) => x.help.name.toLowerCase() === args[0].toLowerCase()
   )
