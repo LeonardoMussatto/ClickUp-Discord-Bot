@@ -1,22 +1,26 @@
-const {getFolder, getLists, getFolders} = require("../utils/ClickUpAPI_Get")
+const { getFolder, getLists, getFolders } = require("../utils/ClickUpAPI_Get")
+
+// TODO update getFolder
+// ENHANCE get folders and lists by name
+// ENHANCE add more info about the lists
 
 exports.run = async (client, message, args) => {
   if (args.length === 1) {
-    const folder = await getFolder(args[0])
+    const folder = await getFolder(client, args[0])
     if (folder.err)
       return message.channel.send(`Error fetching folder: ${folder.err}`)
 
-    const lists = await getLists(folder.id)
+    const lists = await getLists(client, folder.id)
     if (lists.err)
       return message.channel.send(`Error fetching lists: ${lists.err}`)
 
-    return message.channel.send(
-      `Lists in the folder ${folder.name}:\n\`\`\`\n${lists
-        .map((x) => `• ${x.name} | ${x.id}`)
-        .join("\n")}\n\`\`\``
-    )
+    const embed = new Discord.MessageEmbed()
+      .setTitle(`Lists in the folder *${folder.name}* :`)
+      .setDescription(lists.map((x) => `• ${x.name} | ${x.id}`).join("\n"))
+      .setColor("#8951FC")
+    return message.channel.send(embed)
   } else {
-    const folders = await getFolders(process.env.SPACE_ID)
+    const folders = await getFolders(client, "6831505")
     if (folders.err)
       return message.channel.send(`Error fetching folders: ${folder.err}`)
 
