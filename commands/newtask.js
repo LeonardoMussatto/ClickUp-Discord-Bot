@@ -1,20 +1,20 @@
-const {getFolders} = require("../utils/ClickUpAPI_Get")
-const {createTask} = require("../utils/ClickUpAPI_Actions")
+const { getFolders } = require("../utils/ClickUpAPI_Get")
+const { createTask } = require("../utils/ClickUpAPI_Actions")
 
 // ENHANCE add expected usage and useful answer when parameters are missing
+// ENHANCE get folders by name
+// TODO update getFolder
 
 exports.run = async (client, message, args) => {
   const newArgs = message.content
-    .slice(process.env.PREFIX.length + this.help.name.length)
+    .slice(client.settings.bot.prefix.length + this.help.name.length)
     .trim()
     .split("|")
     .map((x) => x.trim())
   if (newArgs.length !== 4)
-    return message.channel.send(
-      "I need information, in order to file it"
-    )
+    return message.channel.send("I need information, in order to file it")
 
-  const folders = await getFolders(process.env.SPACE_ID)
+  const folders = await getFolders(client, "6831505")
   if (!folders || folders.err)
     return message.channel.send("Error fetching folders!")
 
@@ -33,7 +33,7 @@ exports.run = async (client, message, args) => {
   else if (list.err)
     return message.channel.send(`error getting list: ${list.err}`)
 
-  const res = await createTask(list.id, newArgs[0], newArgs[1])
+  const res = await createTask(client, list.id, newArgs[0], newArgs[1])
   if (res.err) return message.channel.send(`fdgffrg! ${res.err}`)
 
   return message.channel.send(

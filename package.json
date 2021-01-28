@@ -1,15 +1,16 @@
 {
   "name": "clickup-discord-bot",
   "version": "1.0.0",
-  "description": "",
+  "git repository": "Puyodead1/ClickUp-Discord-Bot",
+  "description": "bot to integrate Discord and ClickUp - sync comments and create/see tasks/checklists/lists/folders directly from Discord",
+  "keywords" :["Discord Bot", "ClickUp", "Integration", "sync", "todo", "tasks"],
+  "author": "Leonardo Mussatto & Puyodead1",
+  "license": "ISC",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@klasa/stopwatch": "0.0.1",
     "@klasa/utils": "^0.1.0",

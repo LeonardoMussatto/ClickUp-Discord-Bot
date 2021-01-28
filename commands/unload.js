@@ -1,12 +1,16 @@
+/** UNLOAD COMMAND
+ * unload selected command
+ * show amount of time needed to complete the task
+ * only registered devs can run this command
+*/
+
 const { Stopwatch } = require("@klasa/stopwatch")
 
 exports.run = async (client, message, args) => {
-  if (message.author.id !== process.env.DEV_ID)
+  if (message.author.id !== client.config.dev_id)
     return message.channel.send(
       "Only developers are allowed to ask me to unload commands"
     )
-  if (!args || args.length < 0)
-    return message.channel.send("You must provide me a command to reload")
   const cmd = client.commands.find(
     (x) => x.help.name.toLowerCase() === args[0].toLowerCase()
   )
@@ -20,7 +24,9 @@ exports.run = async (client, message, args) => {
     await client.unloadCommand(cmd.help.name)
     stopwatch.stop()
     return msg.edit(
-      `:white_check_mark: Command Unloaded in **${Math.round(stopwatch.duration)}ms**`
+      `:white_check_mark: Command Unloaded in **${Math.round(
+        stopwatch.duration
+      )}ms**`
     )
   } catch (error) {
     return msg.edit(
@@ -31,4 +37,6 @@ exports.run = async (client, message, args) => {
 
 exports.help = {
   name: "unload",
+  args: 1,
+  usage: "<command>",
 }

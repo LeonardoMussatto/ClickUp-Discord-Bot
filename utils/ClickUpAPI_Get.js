@@ -3,12 +3,13 @@ const fetch = require("node-fetch")
 module.exports = {
   /**
    * fetch all teams
+   * @param {object} client needed for ClickUp's Token
    */
-  async getTeams() {
+  async getTeams(client) {
     return await fetch(`https://api.clickup.com/api/v2/team`, {
       method: "GET",
       headers: {
-        Authorization: process.env.CLICKUP_TOKEN,
+        Authorization: client.config.ClickUp_token,
         "Content-Type": "application/json",
       },
     }).then(async (res) => {
@@ -18,16 +19,17 @@ module.exports = {
   },
 
   /**
-   * fetch all spaces
-   * @param {string} team_id
+   * fetch all spaces and their infos
+   * @param {object} client needed for ClickUp's Token
+   * @param {number} team_id unique id of each ClickUp team - can be found using getTeams()
    */
-  async getSpaces(team_id) {
+  async getSpaces(client, team_id) {
     return await fetch(
       `https://api.clickup.com/api/v2/team/${team_id}/space?archived=false`,
       {
         method: "GET",
         headers: {
-          Authorization: process.env.CLICKUP_TOKEN,
+          Authorization: client.config.ClickUp_token,
           "Content-Type": "application/json",
         },
       }
@@ -38,16 +40,17 @@ module.exports = {
   },
 
   /**
-   * fetch all folders
-   * @param {string} space_id
+   * fetch all folders, their infos and children lists
+   * @param {object} client needed for ClickUp's Token
+   * @param {number} space_id unique id of each ClickUp space - can be found using getSpaces()
    */
-  async getFolders(space_id) {
+  async getFolders(client, space_id) {
     return await fetch(
       `https://api.clickup.com/api/v2/space/${space_id}/folder?archived=false`,
       {
         method: "GET",
         headers: {
-          Authorization: process.env.CLICKUP_TOKEN,
+          Authorization: client.config.ClickUp_token,
           "Content-Type": "application/json",
         },
       }
@@ -58,16 +61,17 @@ module.exports = {
   },
 
   /**
-   * fetch all lists
-   * @param {string} folder_id
+   * fetch all lists and their infos
+   * @param {object} client needed for ClickUp's Token
+   * @param {number} folder_id unique id of each ClickUp folder - can be found using getFolders()
    */
-  async getLists(folder_id) {
+  async getLists(client, folder_id) {
     return await fetch(
       `https://api.clickup.com/api/v2/folder/${folder_id}/list`,
       {
         method: "GET",
         headers: {
-          Authorization: process.env.CLICKUP_TOKEN,
+          Authorization: client.config.ClickUp_token,
           "Content-Type": "application/json",
         },
       }
@@ -79,14 +83,16 @@ module.exports = {
 
   /**
    * Fetch all tasks from a list
-   * @param {Number} list_id id of list
+   * @param {object} client needed for ClickUp's Token
+   * @param {number} list_id id of list
    * @param {boolean} archived default false
-   * @param {Number} page page to fetch - default 0
+   * @param {number} page page to fetch - default 0
    * @param {string} order_by orders by field - default created, options: id, created, updated, due_date
    * @param {boolean} reverse default false
    * @param {boolean} subtasks default false
    */
   async getTasks(
+    client,
     list_id,
     archived = false,
     page = 0,
@@ -99,7 +105,7 @@ module.exports = {
       {
         method: "GET",
         headers: {
-          Authorization: process.env.CLICKUP_TOKEN,
+          Authorization: client.config.ClickUp_token,
           "Content-Type": "application/json",
         },
       }
@@ -110,28 +116,30 @@ module.exports = {
   },
 
   /**
-   * fetch a folder by id
-   * @param {string} id
+   * fetch folder's info and children lists by it's id
+   * @param {object} client needed for ClickUp's Token
+   * @param {number} folder_id unique id of each ClickUp folder - can be found using getFolders()
    */
-  async getFolder(folder_id) {
+  async getFolder(client, folder_id) {
     return await fetch(`https://api.clickup.com/api/v2/folder/${folder_id}`, {
       method: "GET",
       headers: {
-        Authorization: process.env.CLICKUP_TOKEN,
+        Authorization: client.config.ClickUp_token,
         "Content-Type": "application/json",
       },
     }).then((res) => res.json())
   },
 
   /**
-   * fetch a list by id
-   * @param {string} list_id
+   * fetch list's infos by it's id
+   * @param {object} client needed for ClickUp's Token
+   * @param {number} list_id unique id of each ClickUp list - can be found using getFolders()
    */
-  async getList(list_id) {
+  async getList(client, list_id) {
     return await fetch(`https://api.clickup.com/api/v2/list/${list_id}`, {
       method: "GET",
       headers: {
-        Authorization: process.env.CLICKUP_TOKEN,
+        Authorization: client.config.ClickUp_token,
         "Content-Type": "application/json",
       },
     }).then((res) => res.json())
@@ -139,15 +147,37 @@ module.exports = {
 
   /**
    * fetch a task by id
-   * @param {string} task_id
+   * @param {object} client needed for ClickUp's Token
+   * @param {string} task_id unique id of each ClickUp task - can be found using getTasks()
    */
-  async getTask(task_id) {
+  async getTask(client, task_id) {
     return await fetch(`https://api.clickup.com/api/v2/task/${task_id}`, {
       method: "GET",
       headers: {
-        Authorization: process.env.CLICKUP_TOKEN,
+        Authorization: client.config.ClickUp_token,
         "Content-Type": "application/json",
       },
     }).then((res) => res.json())
+  },
+
+  /**
+   * fetch all comments in chat view for the chosen view
+   * @param {object} client needed for ClickUp's Token
+   * @param {string} view_id unique id of each ClickUp view
+   */
+  async getChat(client, view_id) {
+    return await fetch(
+      `https://api.clickup.com/api/v2/view/${view_id}/comment`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: client.config.ClickUp_token,
+          "Content-Type": "application/json",
+        },
+      }
+    ).then(async (res) => {
+      const json = await res.json()
+      return json.comments[0]
+    })
   },
 }

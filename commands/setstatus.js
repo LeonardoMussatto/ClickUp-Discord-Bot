@@ -2,21 +2,19 @@ const fetch = require("node-fetch")
 
 exports.run = async (client, message, args) => {
   const newArgs = message.content
-    .slice(process.env.PREFIX.length + this.help.name.length)
+    .slice(client.settings.bot.prefix.length + this.help.name.length)
     .trim()
     .split("|")
     .map((x) => x.trim())
   if (newArgs.length !== 2)
-    return message.channel.send(
-      "I need information, in order to file it"
-    )
+    return message.channel.send("I need information, in order to file it")
 
   const task = await fetch(
     `https://api.clickup.com/api/v2/task/${newArgs[1]}`,
     {
       method: "GET",
       headers: {
-        Authorization: process.env.CLICKUP_TOKEN,
+        Authorization: client.config.ClickUp_token,
       },
     }
   ).then((res) => res.json())
@@ -27,7 +25,7 @@ exports.run = async (client, message, args) => {
     {
       method: "GET",
       headers: {
-        Authorization: process.env.CLICKUP_TOKEN,
+        Authorization: client.config.ClickUp_token,
       },
     }
   ).then((res) => res.json())
@@ -49,7 +47,7 @@ exports.run = async (client, message, args) => {
   const res = await fetch(`https://api.clickup.com/api/v2/task/${newArgs[1]}`, {
     method: "PUT",
     headers: {
-      Authorization: process.env.CLICKUP_TOKEN,
+      Authorization: client.config.ClickUp_token,
     },
     body,
   }).then((res) => res.json())

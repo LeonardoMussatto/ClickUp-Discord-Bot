@@ -8,7 +8,7 @@ exports.log = (content, type = "log") => {
   const timestamp = `[${moment().format("YYYY-MM-DD HH:mm:ss")}]:`;
   switch (type) {
     case "log": {
-      return console.log(`${timestamp} ${chalk.bgBlue(type.toUpperCase())} ${content} `);
+      return console.log(`${timestamp} ${chalk.black.bgBlue(type.toUpperCase())} ${content} `);
     }
     case "warn": {
       return console.log(`${timestamp} ${chalk.black.bgYellow(type.toUpperCase())} ${content} `);
