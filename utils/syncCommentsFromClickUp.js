@@ -32,7 +32,7 @@ module.exports = {
     if (comment.user.username === "ClickUp Bot") return
 
     let lastMessage = await client.channels.cache
-      .get(folder.channelId)
+      .get(team.channelId)
       .messages.fetch({ limit: 1 })
       .then((msg) => {
         return msg.first().content
@@ -59,7 +59,7 @@ module.exports = {
     }
 
     let lastMessage = await client.channels.cache
-      .get(folder.channelId)
+      .get(space.channelId)
       .messages.fetch({ limit: 1 })
       .then((msg) => {
         return msg.first().content
@@ -136,7 +136,7 @@ module.exports = {
     }
 
     let lastMessage = await client.channels.cache
-      .get(folder.channelId)
+      .get(list.channelId)
       .messages.fetch({ limit: 1 })
       .then((msg) => {
         return msg.first().content

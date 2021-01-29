@@ -67,7 +67,28 @@ module.exports = {
    */
   async getLists(client, folder_id) {
     return await fetch(
-      `https://api.clickup.com/api/v2/folder/${folder_id}/list`,
+      `https://api.clickup.com/api/v2/folder/${folder_id}/list?archived=false`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: client.config.ClickUp_token,
+          "Content-Type": "application/json",
+        },
+      }
+    ).then(async (res) => {
+      const json = await res.json()
+      return json.lists
+    })
+  },
+
+  /**
+   * fetch all lists and their infos
+   * @param {object} client needed for ClickUp's Token
+   * @param {number} space_id unique id of each ClickUp space - can be found using getSpaces()
+   */
+  async getFolderlessLists(client, space_id) {
+    return await fetch(
+      `https://api.clickup.com/api/v2/space/${space_id}/list?archived=false`,
       {
         method: "GET",
         headers: {
@@ -94,11 +115,11 @@ module.exports = {
   async getTasks(
     client,
     list_id,
+    subtasks = false,
     archived = false,
     page = 0,
     order_by = "created",
-    reverse = false,
-    subtasks = false
+    reverse = true
   ) {
     return await fetch(
       `https://api.clickup.com/api/v2/list/${list_id}/task?archived=${archived}&page=${page}&order_by=${order_by}&reverse=${reverse}&subtasks=${subtasks}`,
