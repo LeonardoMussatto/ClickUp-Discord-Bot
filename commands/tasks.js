@@ -1,4 +1,4 @@
-/** Get Tasks
+/** GET TASKS
  * command to get all tasks in the selected folders or lists
  * The function is built around for-of loops and filters
  * 1. create new args with the selected targets' type (folders/lists) and targets' names
@@ -57,6 +57,7 @@ exports.run = async (client, message, args) => {
     "Nov",
     "Dec",
   ]
+
   switch (newArgs[0].toLowerCase()) {
     case "folder": {
       const teams = await getTeams(client)
@@ -87,22 +88,34 @@ exports.run = async (client, message, args) => {
             embed.setDescription(
               tasks
                 .map((task) => {
-                  if (!(task.assignees && task.due_date)) {
-                    return `- **${task.name}** • ${task.id}  •  ${task.status.status}`
-                  } else if (task.assignees.length && task.due_date) {
+                  if (!(task.assignees.length || task.due_date)) {
+                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}`
+                  } else if 
+                  (
+                    task.assignees.length && 
+                    task.due_date
+                  ) {
                     let assignees = task.assignees.map((x) => x.username)
                     let date = new Date(task.due_date * 1000)
                     let day = date.getDate()
                     let month = months_arr[date.getMonth()]
-                    return `- **${task.name}** • ${task.id}  •  ${task.status.status}  •  due date: ${day} ${month}  •  assignees: ${assignees}`
-                  } else if (task.assignees && !task.due_date) {
+                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}\n -  assignees: ${assignees}`
+                  } else if 
+                  (
+                    task.assignees && 
+                    !task.due_date
+                  ) {
                     let assignees = task.assignees.map((x) => x.username)
-                    return `- **${task.name}** • ${task.id}  •  ${task.status.status}  •  assignees: ${assignees}`
-                  } else if (task.due_date && task.assignees.length < 1) {
+                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  assignees: ${assignees}`
+                  } else if 
+                  (
+                    task.due_date && 
+                    task.assignees.length < 1
+                  ) {
                     let date = new Date(task.due_date * 1000)
                     let day = date.getDate()
                     let month = months_arr[date.getMonth()]
-                    return `- **${task.name}** • ${task.id}  •  ${task.status.status}  •  due date: ${day} ${month}`
+                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}`
                   }
                 })
                 .join("\n")
@@ -113,6 +126,7 @@ exports.run = async (client, message, args) => {
       }
       break
     }
+    
     case "list": {
       const teams = await getTeams(client)
       let targets = []
@@ -153,22 +167,34 @@ exports.run = async (client, message, args) => {
           embed.setDescription(
             tasks
               .map((task) => {
-                if (!(task.assignees && task.due_date)) {
-                  return `- **${task.name}** • ${task.id}  •  ${task.status.status}`
-                } else if (task.assignees.length && task.due_date) {
+                if (!(task.assignees.length || task.due_date)) {
+                  return `• **${task.name}** - ${task.id}\n -  ${task.status.status}`
+                } else if 
+                (
+                  task.assignees.length && 
+                  task.due_date
+                ) {
                   let assignees = task.assignees.map((x) => x.username)
                   let date = new Date(task.due_date * 1000)
                   let day = date.getDate()
                   let month = months_arr[date.getMonth()]
-                  return `- **${task.name}** • ${task.id}  •  ${task.status.status}  •  due date: ${day} ${month}  •  assignees: ${assignees}`
-                } else if (task.assignees && !task.due_date) {
+                  return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}\n -  assignees: ${assignees}`
+                } else if 
+                (
+                  task.assignees && 
+                  !task.due_date
+                ) {
                   let assignees = task.assignees.map((x) => x.username)
-                  return `- **${task.name}** • ${task.id}  •  ${task.status.status}  •  assignees: ${assignees}`
-                } else if (task.due_date && task.assignees.length < 1) {
+                  return `• **${task.name}** - ${task.id}\n  -  ${task.status.status}\n -  assignees: ${assignees}`
+                } else if 
+                (
+                  task.due_date && 
+                  task.assignees.length < 1
+                ) {
                   let date = new Date(task.due_date * 1000)
                   let day = date.getDate()
                   let month = months_arr[date.getMonth()]
-                  return `- **${task.name}** • ${task.id}  •  ${task.status.status}  •  due date: ${day} ${month}`
+                  return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}`
                 }
               })
               .join("\n")
@@ -181,7 +207,7 @@ exports.run = async (client, message, args) => {
 
     default:
       let reply = `Sorry ${message.author}, you didn't provide a valid option!\nThe options are: \` folder or list \``
-        message.channel.send(reply)
+      message.channel.send(reply)
       break
   }
 }
