@@ -89,7 +89,7 @@ exports.run = async (client, message, args) => {
               tasks
                 .map((task) => {
                   if (!(task.assignees.length || task.due_date)) {
-                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}`
+                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n`
                   } else if 
                   (
                     task.assignees.length && 
@@ -99,14 +99,14 @@ exports.run = async (client, message, args) => {
                     let date = new Date(task.due_date * 1000)
                     let day = date.getDate()
                     let month = months_arr[date.getMonth()]
-                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}\n -  assignees: ${assignees}`
+                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}\n -  assignees: ${assignees}\n`
                   } else if 
                   (
                     task.assignees && 
                     !task.due_date
                   ) {
                     let assignees = task.assignees.map((x) => x.username)
-                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  assignees: ${assignees}`
+                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  assignees: ${assignees}\n`
                   } else if 
                   (
                     task.due_date && 
@@ -115,7 +115,7 @@ exports.run = async (client, message, args) => {
                     let date = new Date(task.due_date * 1000)
                     let day = date.getDate()
                     let month = months_arr[date.getMonth()]
-                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}`
+                    return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}\n`
                   }
                 })
                 .join("\n")
@@ -168,7 +168,7 @@ exports.run = async (client, message, args) => {
             tasks
               .map((task) => {
                 if (!(task.assignees.length || task.due_date)) {
-                  return `• **${task.name}** - ${task.id}\n -  ${task.status.status}`
+                  return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n`
                 } else if 
                 (
                   task.assignees.length && 
@@ -178,14 +178,14 @@ exports.run = async (client, message, args) => {
                   let date = new Date(task.due_date * 1000)
                   let day = date.getDate()
                   let month = months_arr[date.getMonth()]
-                  return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}\n -  assignees: ${assignees}`
+                  return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}\n -  assignees: ${assignees}\n`
                 } else if 
                 (
                   task.assignees && 
                   !task.due_date
                 ) {
                   let assignees = task.assignees.map((x) => x.username)
-                  return `• **${task.name}** - ${task.id}\n  -  ${task.status.status}\n -  assignees: ${assignees}`
+                  return `• **${task.name}** - ${task.id}\n  -  ${task.status.status}\n -  assignees: ${assignees}\n`
                 } else if 
                 (
                   task.due_date && 
@@ -194,7 +194,7 @@ exports.run = async (client, message, args) => {
                   let date = new Date(task.due_date * 1000)
                   let day = date.getDate()
                   let month = months_arr[date.getMonth()]
-                  return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}`
+                  return `• **${task.name}** - ${task.id}\n -  ${task.status.status}\n -  due date: ${day} ${month}\n`
                 }
               })
               .join("\n")
